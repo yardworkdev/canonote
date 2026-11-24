@@ -52,7 +52,7 @@ Three properties are the product, and a change that weakens one needs a reason:
 | `npm run lint` | ESLint; zero errors is the bar (warnings are tracked) |
 | `npm run dev` | Vite dev server on :5173 |
 | `npm run test` | Playwright end-to-end suite (~6 minutes, 87 tests) |
-| `npm run test:unit` | vitest only (67 files, 659 passed, 3 skipped) |
+| `npm run test:unit` | vitest only (72 files, 702 passed, 3 skipped) |
 | `npm run check:bundle` | every built surface stays inside its byte budget |
 | `npm run audit:artifact` | no built href/src points outside `dist/`, every route exists |
 | `npm run contract` | boots the reference server, then runs enter → write → access → presence → conformance |
@@ -303,7 +303,7 @@ instead of looking green.
 
 ## Verification before saying done
 
-1. `npm run verify` — typecheck, 629 unit tests, build.
+1. `npm run verify` — typecheck, 702 unit tests, build.
 2. `npm run lint` — zero errors.
 3. If it touches the save path: `npm run check:save`.
 4. If it touches presence: `npm run check:presence`.
