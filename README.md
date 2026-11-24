@@ -90,7 +90,8 @@ can put the notebook back in the browser without moving or deleting a single fil
 The storage layer sits behind a `NotebookStore` seam, so where notes physically live changes without
 the app changing — three adapters are behind it (the folder, IndexedDB, Web Storage). Which one is the
 default is **still open** (a folder on your disk that your own Drive/Dropbox syncs, a small hosted
-Postgres, or a repo per user) and is recorded, unresolved, in [DECISIONS.md](./DECISIONS.md).
+Postgres, or a repo per user). All three adapters already sit behind the seam, so the choice can change
+without touching the app.
 
 Import and export are the escape hatch and work today: your notes are never trapped in the app.
 
@@ -266,7 +267,6 @@ MIT — see [LICENSE](./LICENSE).
 
 - [ROADMAP.md](./ROADMAP.md) — the slice plan to 1.0
 - [AGENT_API.md](./AGENT_API.md) — how an agent gets a key and writes into a notebook
-- [DECISIONS.md](./DECISIONS.md) — rebuild decisions, including the open storage question
 - [PERFORMANCE.md](./PERFORMANCE.md) — the performance budget and the numbers behind it
 - [BRAND.md](./BRAND.md) — the style canon for both surfaces
 - [DESIGN-SYSTEM.md](./DESIGN-SYSTEM.md) — how the brand tokens are implemented
