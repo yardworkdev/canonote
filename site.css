@@ -1,0 +1,576 @@
+/* Front-end stylesheet — the same brand rules as the app, applied to one static page.
+   Token values mirror index.css (themes) and tailwind.config.js; see BRAND.md.
+   There is deliberately no Tailwind here: one page does not need a second pipeline,
+   and the CDN build logged a "should not be used in production" warning. */
+
+:root {
+  /* Same identity as the app (midnight = ink and brass), not a second theme:
+     the marketing page reuses the app's ink, surfaces and accent exactly. */
+  --bg: #121313;
+  --surface: #232426; /* = app gray-800 */
+  --surface-2: #2a2b2d; /* = app gray-750 */
+  --border: rgb(255 255 255 / 0.09);
+  --border-strong: rgb(255 255 255 / 0.18);
+  --text: #e4e4e2;
+  --text-muted: #9c9c99;
+  --text-faint: #9a9a97; /* 6.2:1 on --bg */
+  /* No hue. Teal read as green (Ves, 2026-11-08), ink blue read as "the blue
+     accent is just terrible — keep it grey" (Ves, same day). The page is now
+     achromatic: hierarchy comes from the grey ramp and from space, and the only
+     filled control is near-white on near-black. A product that asks you to
+     decide what an agent may change does not need a brand colour competing with
+     the one thing it wants you to see. */
+  --accent: #f2f2ef; /* the one filled control */
+  --accent-strong: #dbdbd6; /* its hover step */
+  --on-accent: #121316; /* label on the fill; 15.6:1 */
+  --focus: rgb(232 232 227 / 0.6);
+  --shadow-rest: 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.1);
+  --radius-control: 2px;
+  --radius-panel: 2px;
+  --font-ui: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(190 190 186 / 0.3);
+}
+
+:focus-visible {
+  outline: 1px solid var(--focus);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0;
+  padding: 0 24px 0 clamp(24px, 6vw, 88px);
+}
+
+/* ---------- type scale (BRAND.md) ---------- */
+
+.hero-title {
+  margin: 0 0 24px;
+  font-size: clamp(2.5rem, 6vw, 4.4rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.038em;
+}
+
+/* The second line used to be grey, which made the punchline look disabled.
+   Emphasis is size and position, never a dimmer ink. */
+.hero-title-quiet {
+  color: inherit;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: clamp(1.375rem, 2.5vw, 1.625rem);
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  max-width: 62ch;
+}
+
+.label {
+  margin: 0;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.faint {
+  color: var(--text-faint);
+}
+
+.meta {
+  margin: 24px 0 0;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+/* ---------- buttons ---------- */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-control);
+  font-size: 15px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition:
+    background-color 140ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 140ms cubic-bezier(0.2, 0, 0, 1),
+    color 140ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--border-strong);
+}
+
+.btn-primary svg,
+.btn-secondary svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.nav-brand svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  transition: color 140ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+/* One filled control above the fold is enough; this is a link, not a button. */
+.nav-cta {
+  color: var(--text) !important;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-only-mobile {
+  display: inline-flex;
+}
+@media (min-width: 768px) {
+  .nav-only-mobile {
+    display: none;
+  }
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  padding: 96px 0;
+}
+
+.section-tight {
+  padding: 64px 0;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.hero {
+  padding: 64px 0 64px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.chip-dot {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* ---------- cards ---------- */
+
+.grid-3 {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.grid-2 {
+  display: grid;
+  gap: 32px 48px;
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-2 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface);
+  padding: 32px;
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.feature {
+  display: flex;
+  gap: 16px;
+}
+
+.feature h3 {
+  margin: 0 0 4px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ---------- table ---------- */
+
+.table {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  align-items: center;
+  font-size: 14px;
+}
+
+.table-row:first-child {
+  border-top: 0;
+}
+
+.table-head {
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--surface);
+}
+
+.table-row span:not(:first-child) {
+  text-align: center;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-faint);
+  font-size: 14px;
+}
+
+.footer-inner a:hover {
+  color: var(--text);
+}
+
+/* ---------- screenshot, steps, note ---------- */
+
+.shot {
+  margin: 40px 0 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.shot figcaption {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.steps {
+  list-style: none;
+  margin: 48px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--border);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step {
+  background: var(--bg);
+  padding: 28px 24px 32px;
+}
+
+.step-num {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+.step h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.step p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14.5px;
+}
+
+.note {
+  margin: 32px 0 0;
+  padding: 16px 20px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.closing {
+  text-align: center;
+}
+
+.closing .lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.actions-center {
+  justify-content: center;
+}
+
+kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+    animation: none !important;
+  }
+}
+
+/* Secondary actions are words, not boxes: a second and third button of equal
+   weight turn a primary action into a menu. */
+.link-quiet {
+  color: var(--text-muted);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 2px;
+  transition: color 140ms cubic-bezier(0.2, 0, 0, 1), border-color 140ms;
+}
+
+.link-quiet:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* The hero is one composition, not a column with a screenshot underneath it:
+   the words sit left, the proof sits beside them, and nothing is orphaned. */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+.hero-copy {
+  max-width: 40rem;
+}
+
+@media (min-width: 1000px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  .hero .shot {
+    margin: 0;
+  }
+}

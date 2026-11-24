@@ -1,0 +1,581 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* No display or note serif. Both were rejected on sight ("This font is
+   horrendous", "looks even worse", Ves, 2026-11-08) and the note is now set in
+   the same neutral sans as the interface. */
+
+
+@layer base {
+  /* Shadow custom properties were removed 2026-10-08: the tailwind scale in
+     tailwind.config.js is the single source of elevation now. */
+
+  /* ============================================================
+     Theme system — each theme sets its accent ramp (consumed by
+     Tailwind accent-* classes), surface tints, background, fonts,
+     and editor text color. Default = Midnight.
+     ============================================================ */
+  :root,
+  [data-theme='midnight'] {
+    /* Midnight = ink, and no accent hue at all (2026-11-08). Teal was the previous accent
+       and read as "green, doesn't fit the design", and ink blue followed it the
+       same day ("just keep it grey"). There is no hue in any theme now. */
+    /* Achromatic by decision. Teal read as green, ink blue read as "just
+       terrible — keep it grey" (Ves, 2026-11-08). Hierarchy now comes from the
+       grey ramp and from space; the only filled control is near-white on dark. */
+    --accent-50: 25 25 25;
+    --accent-100: 39 39 39;
+    --accent-200: 59 59 59;
+    --accent-300: 109 109 109;
+    --accent-400: 236 236 236; /* focus rings, active text, caret */
+    --accent-500: 245 245 245;
+    --accent-600: 240 240 240; /* the one filled-button colour */
+    --accent-700: 214 214 214; /* one step darker — button hover */
+    --accent-800: 168 168 168;
+    --accent-900: 96 96 96;
+
+    /* Agent surface — an agent's text sits on its own raised surface with a lighter
+       rule beside it: suggestions, agent cursors, agent labels. No hue anywhere: the
+       product is achromatic, so authorship is carried by surface and position, never
+       by colour. Never used for UI chrome. */
+    --agent-bg: 58 58 58; /* +20 over the surface: a panel, not a shading */
+    --agent-rule: 226 226 226;
+    --agent-text: 234 234 234;
+    --agent-quiet: 136 136 136;
+
+    /* Neutral ramp — pure grey, lifted off black so hairline rules and panels read. */
+    --gray-50: 250 250 250;
+    --gray-100: 242 242 242;
+    --gray-200: 228 228 228;
+    --gray-300: 202 202 202;
+    --gray-400: 159 159 159;
+    --gray-500: 115 115 115;
+    --gray-600: 80 80 80;
+    --gray-700: 57 57 57;
+    --gray-750: 45 45 45;
+    --gray-800: 38 38 38;
+    --gray-850: 31 31 31;
+    --gray-900: 24 24 24;
+    --gray-950: 13 13 13;
+
+    --bg-grad: #121212; /* flat ink */
+    --surface: 38 38 38; /* = gray-800; the front end mirrors this exactly */
+    --editor-text: 228 228 228;
+  }
+
+  /* Sepia — the one theme with a temperature, and it is a real one: espresso
+     paper under an ember accent (2026-11-18). The three near-identical greys
+     that were here before looked like a broken switch: choosing a theme did
+     nothing you could see, and the filled button went black on a dark page.
+     This one is warm neutrals, an ember accent that is actually used, and an
+     agent surface in cool ink so authored text cannot be mistaken for yours. */
+  [data-theme='sepia'] {
+    --accent-50: 44 34 26;
+    --accent-100: 62 47 35;
+    --accent-200: 120 92 66;
+    --accent-300: 214 168 116; /* accent text on the page */
+    --accent-400: 238 183 112; /* focus rings, active text, caret */
+    --accent-500: 240 171 76;
+    --accent-600: 230 150 54; /* the one filled-button colour */
+    --accent-700: 205 128 41; /* hover step */
+    --accent-800: 168 103 32;
+    --accent-900: 126 76 24;
+
+    /* Warm neutral ramp — the page is paper, not ink. */
+    --gray-50: 250 245 238;
+    --gray-100: 243 235 224;
+    --gray-200: 230 219 203;
+    --gray-300: 209 194 175;
+    --gray-400: 186 171 150;
+    --gray-500: 152 136 116;
+    --gray-600: 118 103 85;
+    --gray-700: 92 79 65;
+    --gray-750: 68 58 48;
+    --gray-800: 52 44 37;
+    --gray-850: 42 36 30;
+    --gray-900: 32 27 23;
+    --gray-950: 20 16 13;
+
+    --bg-grad: #14100d; /* espresso */
+    --surface: 52 44 37;
+    --editor-text: 236 227 214;
+
+    /* An agent's words are cool ink on warm paper: the difference is a hue, not
+       only a step, so it survives a glance and a screenshot. */
+    --agent-bg: 34 40 52;
+    --agent-rule: 122 162 214;
+    --agent-text: 226 233 244;
+    --agent-quiet: 150 166 188;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      'Oxygen',
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
+      'Helvetica Neue',
+      sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.012em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Placeholder for contentEditable — removed 2026-10-08: the rich-text surface
+   is gone (the editor is a textarea), and nothing in src/ uses
+   [contenteditable][data-placeholder] any more. */
+
+/* Resizable panels */
+@media (min-width: 768px) {
+  .editor-container > div:first-child {
+    width: var(--split-ratio, 50%) !important;
+    flex-basis: var(--split-ratio, 50%) !important;
+  }
+  .editor-container > div:last-child {
+    width: var(--preview-ratio, 50%) !important;
+    flex-basis: var(--preview-ratio, 50%) !important;
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoom-in-95 {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.zoom-in-95 {
+  animation: zoom-in-95 0.2s ease-out;
+}
+
+/* Custom Scrollbar — thin and quiet. */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 3px;
+  transition: background 140ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.24);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+/* Interaction — 140ms, colour and opacity only. No global transform scale on
+   press: it made every control feel springy, and the taste note was "simple but
+   feels great", which here means calm. */
+button {
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 140ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Inputs — the heavy focus shadow became a hairline ring (see focus-visible
+   utilities in components). Nothing to do here any more. */
+
+/* Subtle pulse animation for loading states */
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Slide in animation */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.3s ease-out;
+}
+
+/* Advanced Animations — shimmer/float/glow-pulse removed 2026-10-08 (no callers). */
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Gradient Utilities — removed 2026-10-08. gradient-primary / gradient-ai /
+   gradient-success / gradient-warning / gradient-mesh had no callers in src,
+   index.html or app.html, and Ves asked for a minimal, high-taste surface:
+   flat ink, hairline rules, one accent. Nothing to keep. */
+
+/* Surfaces — opaque, hairline border, no blur. The glass system (three blur
+   depths, a noise overlay, tinted shadows) was decoration on top of content. */
+.glass-front,
+.glass-middle,
+.glass-back {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(0 0 0 / 0.08);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+.dark .glass-front,
+.dark .glass-middle,
+.dark .glass-back {
+  background: rgb(var(--surface));
+  border-color: rgb(255 255 255 / 0.08);
+  box-shadow: none;
+}
+
+/* Premium Borders — removed 2026-10-08 (no callers; borders are hairlines now). */
+
+/* Animation Classes */
+.animate-checkmark {
+  animation: checkmark 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Decorative motion (shimmer, float, glow-pulse, bounce-in) removed 2026-10-08:
+   none of them had callers, and they were the "loud" register Ves asked me to
+   drop. Motion here is now opacity and a couple of pixels, ~140ms, nothing else. */
+
+
+/* Selection Gradient */
+::selection {
+  background: rgba(100, 116, 139, 0.4);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(100, 116, 139, 0.4);
+  color: inherit;
+}
+
+.dark ::selection {
+  background: rgba(100, 116, 139, 0.6);
+  color: #ffffff;
+}
+
+.dark ::-moz-selection {
+  background: rgba(100, 116, 139, 0.6);
+  color: #ffffff;
+}
+
+/* TipTap selection styling — removed 2026-10-08 with the rich-text surface. */
+
+/* Focus Ring Gradient — removed 2026-10-08 (no callers; one hairline ring now). */
+
+/* Landing page entrance animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter {
+  opacity: 0;
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.hero-enter-1 {
+  animation-delay: 0.05s;
+}
+.hero-enter-2 {
+  animation-delay: 0.15s;
+}
+.hero-enter-3 {
+  animation-delay: 0.25s;
+}
+.hero-enter-4 {
+  animation-delay: 0.35s;
+}
+.hero-enter-5 {
+  animation-delay: 0.45s;
+}
+.hero-enter-6 {
+  animation-delay: 0.6s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Animated Background Gradient — removed 2026-10-08. The page background is a
+   flat surface now: a slow moving gradient behind the chrome was the loudest
+   thing on screen and said nothing about the content. */
+.bg-animated-gradient {
+  background-color: #fafaf9;
+}
+
+.bg-animated-gradient-dark {
+  background-color: var(--bg-grad);
+}
+
+/* Glassmorphism Utility — removed 2026-10-08 (no callers, no blur anywhere). */
+
+/* Final override for task list checkboxes - must be at end to override everything */
+input[type='checkbox'][data-checked='true'],
+input[type='checkbox']:checked {
+  background-color: #64748b !important;
+  border-color: #64748b !important;
+  background-image: none !important;
+  accent-color: #64748b !important;
+}
+
+.dark input[type='checkbox'][data-checked='true'],
+.dark input[type='checkbox']:checked {
+  background-color: #94a3b8 !important;
+  border-color: #94a3b8 !important;
+  background-image: none !important;
+  accent-color: #94a3b8 !important;
+}
+
+/* Glassmorphism Utility — removed 2026-10-08 (no callers, no blur anywhere). */
+
+
+/* A range an agent wrote, painted behind the transparent textarea.
+   Background only: the backdrop has to stay glyph-aligned with the text, so no
+   horizontal padding, border or margin is allowed here. The left rule is therefore a
+   gradient stripe, not a border — an inset box-shadow on an inline span is not
+   painted reliably, which is exactly what made the first version invisible. */
+.agent-mark {
+  /* Flat and square on purpose: a rounded corner and a fade that restarts on every
+     wrapped line read as a wobbling, quilted strip (Ves, 2026-11-18: "the background
+     color is wobbly"). A hard edge and an even fill tile line to line. */
+  background-color: rgb(var(--agent-rule) / 0.16);
+  /* An inline span's background is positioned once for the whole element, so with the
+     default `slice` only the FIRST wrapped line got the rule and the lines sat as 20px
+     strips with 8px gaps between them (measured on production: rule on 1/6 lines, gaps
+     [8,8,8,8,8]). Clone the box per fragment so every line carries its own rule, and
+     pad vertically to the line box so the fragments touch. Vertical padding does not
+     move glyphs, so the backdrop stays aligned with the textarea; 0.25em is half the
+     8px gap at 16px/28px and scales with the text. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.25em 0;
+  /* The rule is drawn OUTSIDE the box, 4px into the margin, so it never sits under the
+     first glyph of a line — measured: a 3px stripe at x=0 left only 1px between the rule
+     and the "I" of a wrapped line. An outer shadow on an inline span is painted per
+     fragment (unlike an inset one, which Chromium skips); with the padding closing the
+     gaps the bars join into one continuous mark. */
+  box-shadow: -4px 0 0 0 rgb(var(--agent-rule));
+}
+
+/* Another writer's caret, drawn in the same mirror as the agent's band so it lands
+   on the character it names. The label rides above the line; both are painted from
+   one custom property, so a second person does not need a second rule. */
+.remote-caret {
+  position: relative;
+  display: inline;
+}
+
+.remote-caret::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 2px;
+  height: 1.75em;
+  background-color: var(--remote-tint, #7aa2d6);
+  pointer-events: none;
+}
+
+.remote-caret::after {
+  content: attr(data-remote-author);
+  position: absolute;
+  left: -1px;
+  top: -1.15em;
+  padding: 0 0.3em;
+  border-radius: 0.2em;
+  background-color: var(--remote-tint, #7aa2d6);
+  color: #14100d;
+  font-size: 0.625rem;
+  line-height: 1.4;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.remote-selection {
+  background-color: color-mix(in srgb, var(--remote-tint, #7aa2d6) 24%, transparent);
+}
+
+/* The thread: who wrote it has to be visible before you read a word.
+   A person's message is a plain hairline card. An agent's message is a raised
+   panel on the agent surface with a rule down its left edge and a labelled chip,
+   in every theme — in sepia the surfaces differ by hue as well (Ves, 2026-11-18:
+   "if something is written by the agent it should look differently ... it should
+   have a different background, and it should be very clearly a different thing"). */
+.thread-message {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.thread-message[data-author='human'] {
+  border: 1px solid rgb(var(--gray-700) / 0.5);
+}
+
+.thread-message[data-author='agent'] {
+  background-color: rgb(var(--agent-bg));
+  border: 1px solid rgb(var(--agent-rule) / 0.18);
+  border-left: 3px solid rgb(var(--agent-rule));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.thread-message[data-author='agent'] .thread-author {
+  color: rgb(var(--agent-rule));
+}
+
+.thread-message[data-author='agent'] .thread-body {
+  color: rgb(var(--agent-text));
+}
+
+.thread-message[data-author='agent'] .thread-time {
+  color: rgb(var(--agent-quiet));
+}
+
+.thread-message[data-author='agent'] .thread-kind {
+  background-color: rgb(var(--agent-rule) / 0.16);
+  color: rgb(var(--agent-text));
+}
+
+.thread-message[data-author='agent'] .thread-proposal {
+  background-color: rgb(var(--gray-950) / 0.45);
+  border: 1px solid rgb(var(--agent-rule) / 0.14);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .bg-animated-gradient {
+    animation: none;
+  }
+}

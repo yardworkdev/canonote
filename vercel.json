@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "regions": ["dub1"],
+  "rewrites": [
+    { "source": "/api/notes/:path*", "destination": "/api/notes?path=:path*" },
+    { "source": "/api/agent/:path*", "destination": "/api/agent?path=:path*" },
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/app/:path*", "destination": "/app.html" },
+    { "source": "/reset-password", "destination": "/app.html" }
+  ]
+}

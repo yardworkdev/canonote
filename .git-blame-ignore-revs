@@ -1,0 +1,9 @@
+# Commits listed here are skipped by `git blame` so bulk/mechanical changes
+# don't obscure real authorship.
+#
+# Enable locally (one-time):
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+# GitHub honors this file automatically.
+#
+# style: apply Prettier formatting across codebase
+8de60da34802832270e89145da732472f3341f62

@@ -1,0 +1,18 @@
+[package]
+name = "canonote-agent"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+serde_json = "1"
+sha2 = "0.10"
+rand = "0.8"
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"

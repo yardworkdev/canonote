@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>canonote — a notebook your agent can write into</title>
+    <meta
+      name="description"
+      content="A calm, local-first markdown notebook. Agent edits arrive as reviewable suggestions, never silent rewrites. No account, no server, free."
+    />
+    <meta property="og:title" content="canonote — a notebook your agent can write into" />
+    <meta
+      property="og:description"
+      content="Plain markdown in your browser. Agent edits arrive as suggestions you accept or reject."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/og.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Brand rules live in BRAND.md; tokens and styles in site.css (no Tailwind CDN). -->
+    <link rel="stylesheet" href="./site.css" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav-inner">
+        <a href="./" class="nav-brand">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            />
+          </svg>
+          canonote
+        </a>
+
+        <div class="nav-links">
+          <a href="#how">How it works</a>
+          <a href="#what">What it is</a>
+          <a href="https://github.com/vesivanov/notes-editor">GitHub</a>
+        </div>
+
+        <a href="./app" class="btn-primary nav-only-mobile">Open</a>
+      </div>
+    </nav>
+
+    <main>
+      <header class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+          <p class="chip">No account. No server. MIT licensed.</p>
+
+          <h1 class="hero-title">
+            A notebook your<br />
+            <span class="hero-title-quiet">agent can write into.</span>
+          </h1>
+
+          <p class="lede">
+            Your notes live in your own browser, in a plain file you own. Your agent proposes
+            changes as suggestions — you accept or decline each one, and nothing is rewritten
+            behind your back.
+          </p>
+
+          <div class="actions">
+            <a href="./app" class="btn-primary">
+              Open the notebook
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
+            <a href="https://github.com/vesivanov/notes-editor" class="link-quiet">Read the source</a>
+            <a href="./demo" class="link-quiet">See an agent edit a note</a>
+          </div>
+
+          <p class="meta">Works offline · Yours to export · Free forever</p>
+          </div>
+
+          <figure class="shot">
+            <img
+              src="/shots/suggestion.png"
+              alt="A note in canonote where Claude's replacement of one paragraph is highlighted, with Accept and Decline beside it"
+              width="1440"
+              height="1180"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </header>
+
+      <hr class="rule" />
+
+      <section id="how" class="section">
+        <div class="wrap">
+          <p class="label">The difference</p>
+          <h2 class="section-title">Review is the product, not an afterthought</h2>
+          <p class="lede">
+            Most "AI notes" apps write straight into your file. canonote gives the agent a pen it
+            cannot use on its own.
+          </p>
+
+          <ol class="steps">
+            <li class="step">
+              <span class="step-num">01</span>
+              <h3>Your agent reads and proposes</h3>
+              <p>
+                It works against the note you are reading and sends a suggestion. It has no way to
+                rewrite the note itself.
+              </p>
+            </li>
+            <li class="step">
+              <span class="step-num">02</span>
+              <h3>You see what would change</h3>
+              <p>
+                The suggestion arrives with the original text and the proposed replacement, next to
+                the note — a diff you can read, not a version already on disk.
+              </p>
+            </li>
+            <li class="step">
+              <span class="step-num">03</span>
+              <h3>You accept, or you reject</h3>
+              <p>
+                Accepting applies the change and records it in the activity feed. Rejecting leaves
+                the note exactly as it was.
+              </p>
+            </li>
+          </ol>
+
+          <p class="note">
+            Honest scope: the notebook itself needs no backend at all. Reviewing agent suggestions
+            uses the optional hosted layer (Supabase). Without it you still get the full editor,
+            search, export and version history.
+          </p>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <section id="what" class="section">
+        <div class="wrap">
+          <p class="label">What it is</p>
+          <h2 class="section-title">One file, from first word to export</h2>
+
+          <div class="grid-3">
+            <article class="card">
+              <h3>A plain file, not a locked box</h3>
+              <p>
+                Your note is plain text: readable in any app, on any machine, in ten years. There
+                is no hidden rich-text copy and nothing is converted while you type.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Keyboard first</h3>
+              <p>
+                <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>K</kbd> jumps between notes, searches text
+                and runs commands. The editor stays out of the way.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Yours to keep</h3>
+              <p>
+                Notes live in your browser. Export as a document, a web page, plain text or PDF at
+                any time. No
+                account, no subscription, no lock-in.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <section class="section-tight">
+        <div class="wrap closing">
+          <h2 class="section-title">Open it and start typing.</h2>
+          <p class="lede">No signup. Nothing to install. It works before the network does.</p>
+          <div class="actions actions-center">
+            <a href="./app" class="btn-primary">
+              Open the notebook
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>canonote — a calm notebook your agent can write into</span>
+        <span>
+          MIT · Built with React and plain markdown ·
+          <a href="https://github.com/vesivanov/notes-editor">GitHub</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

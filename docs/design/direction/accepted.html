@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>canonote — accepted</title>
+<style>
+  /* ---------------------------------------------------------------------------
+     The page is a document. A proposal is an event in it.
+
+     You write on white, in Golos Text — drawn at Paratype for continuous reading
+     on screen. When Claude proposes something the surface itself changes, edge to
+     edge, and the note continues underneath; the decision sits at the far edge of
+     the band, in its own zone, where a margin's decision belongs. Accept and the
+     band closes: the new sentence turns black and rejoins the document.
+  --------------------------------------------------------------------------- */
+  @font-face { font-family: 'Golos Text'; src: url('./fonts/GolosText-400.woff2') format('woff2');
+               font-weight: 400 700; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Public Sans'; src: url('./fonts/PublicSans-400.woff2') format('woff2');
+               font-weight: 400 700; font-style: normal; font-display: block; }
+
+  :root {
+    --paper: #ffffff;
+    --ink: #17191a;
+    --ink-near: #22262a;
+    --ink-quiet: #4d5457;
+    --ink-faint: #6d7476;
+    --rule: #e3e4e2;
+    --band: #17191a;
+    --band-edge: #33383a;    /* the band is a surface, so it has its own hairline */
+    --band-text: #f5f5f3;
+    --band-quiet: #a9b0b2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; border-radius: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Public Sans', sans-serif;
+    display: flex; flex-direction: column; height: 100vh; overflow: hidden;
+  }
+
+  .bar { display: flex; align-items: center; gap: 20px; padding: 0 34px; min-height: 54px; font-size: 12.5px; color: var(--ink-quiet); }
+  .bar--top { border-bottom: 1px solid var(--rule); }
+  .bar--foot { border-top: 1px solid var(--rule); min-height: 44px; font-size: 12px; }
+  .wordmark { font-family: 'Golos Text', serif; font-weight: 600; font-size: 16px; letter-spacing: -0.014em; color: var(--ink); }
+  .bar .divider { width: 1px; height: 15px; background: var(--rule); }
+  .bar .grow { flex: 1; }
+  .bar .fact { color: var(--ink-faint); }
+
+  .scroll { flex: 1; overflow: auto; }
+
+  /* one measure for the document and for the band's prose */
+  .col { width: min(33rem, calc(100% - 4rem)); margin: 0 auto; }
+
+  .page { padding: 56px 0 0; }
+  .page + .page { padding-top: 24px; }
+  .page h1 {
+    font-family: 'Golos Text', serif; font-weight: 600;
+    font-size: 40px; line-height: 1.12; letter-spacing: -0.022em; margin-bottom: 30px;
+  }
+  .page p {
+    font-family: 'Golos Text', serif; font-weight: 400;
+    font-size: 19px; line-height: 1.62; letter-spacing: 0.001em;
+    color: var(--ink-near); margin-bottom: 19px;
+  }
+
+  /* ------------------------------------------------------------- the band
+     Full bleed, but its inside mirrors the page: the proposal starts on the same
+     left edge as the note, the decision sits in its own column at the far edge,
+     and a hairline divides the two. Nothing is absolutely positioned, so the band
+     is exactly as tall as what it holds. */
+  .band {
+    background: var(--band); color: var(--band-text);
+    border-top: 1px solid var(--band-edge); border-bottom: 1px solid var(--band-edge);
+    margin: 24px 0 22px;
+    display: grid;
+    grid-template-columns: minmax(0, 33rem) minmax(24px, 1fr) 12.5rem;
+    padding: 30px 34px 34px max(24px, calc((100% - 33rem) / 2));
+  }
+  .band .said {
+    font-family: 'Public Sans', sans-serif; font-size: 12.5px; font-weight: 500;
+    color: var(--band-quiet); margin-bottom: 15px;
+  }
+  .band .said .when { font-weight: 400; }
+  .band .was {
+    font-family: 'Golos Text', serif; font-size: 15px; line-height: 1.45;
+    color: #8b9294; text-decoration: line-through;
+    text-decoration-thickness: 1px; text-decoration-color: #8b9294;
+    margin-bottom: 9px; max-width: 30rem;
+  }
+  /* the change is the loudest thing on the screen, which is the point of it */
+  .band .words {
+    font-family: 'Golos Text', serif; font-weight: 500; font-size: 26px;
+    line-height: 1.32; letter-spacing: -0.016em; color: var(--band-text);
+    max-width: 26rem;
+  }
+
+  .band .decide {
+    border-left: 1px solid #3d4244; padding: 64px 0 0 26px;
+    display: flex; flex-direction: column; align-items: stretch; gap: 9px;
+  }
+  .band .decide button {
+    font-family: 'Public Sans', sans-serif; font-size: 12.5px; font-weight: 500;
+    cursor: pointer; padding: 9px 14px; border: 1px solid transparent;
+  }
+  .band .decide .accept { background: var(--band-text); color: var(--ink); border-color: var(--band-text); }
+  .band .decide .decline { background: none; color: var(--band-text); border-color: var(--band-edge); }
+  .band .decide .promise {
+    font-size: 11.5px; line-height: 1.5; color: var(--band-quiet); margin-top: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .band { grid-template-columns: minmax(0, 1fr); padding: 26px 24px; }
+    .band .decide { border-left: 0; border-top: 1px solid #3d4244; padding: 22px 0 0; margin-top: 24px; }
+  }
+
+  .record { margin: 26px 0 34px; border-top: 1px solid var(--rule); padding-top: 12px; }
+  .record div { font-size: 12px; line-height: 1.7; color: var(--ink-faint); }
+  .record div .what { color: var(--ink-quiet); }
+
+  @media (max-width: 900px) {
+    .band .decide { position: static; width: auto; margin-top: 22px; max-width: 16rem; }
+    .col { width: calc(100% - 3rem); }
+  }
+</style>
+</head>
+<body>
+  <header class="bar bar--top">
+    <span class="wordmark">canonote</span>
+    <span class="divider"></span>
+    <span>Q3 planning</span>
+    <span class="fact">3 notes</span>
+    <span class="grow"></span>
+    <span>Claude is reading this note</span>
+  </header>
+
+  <div class="scroll">
+    <div class="page col">
+      <h1>The launch slipped a week</h1>
+      <p>The pricing page was still being rewritten when the campaign went live, so three days of
+         spend went to a page that was not finished.</p>
+      <p>Not until the pricing page is final. One slipped launch is enough.</p>
+      <p>Two weeks of runway buys a better page, not a louder campaign.</p>
+
+      <div class="record">
+        <div><span class="what">You accepted</span> a replacement of the second paragraph · 14:53</div>
+        <div><span class="what">You accepted</span> a move of the launch review · 14:51</div>
+        <div><span class="what">You declined</span> a new Q4 section · 14:49</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bar bar--foot">
+    <span class="fact">Plain text · 1.2 KB · stored in this browser · export anytime</span>
+    <span class="grow"></span>
+    <span class="fact">Saved 14:53</span>
+  </footer>
+</body>
+</html>
